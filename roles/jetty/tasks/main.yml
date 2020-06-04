@@ -46,10 +46,10 @@
 
 # set soft link, -b cover the exist links
 # ln -sb src des
-- name: set soft link
-  shell: |
-    ln -sb /opt/jetty  /data/wwwroot/jetty
-    ln -sb /opt/jetty/config /data/config/jetty
+# - name: set soft link
+#   shell: |
+#     ln -sb /opt/jetty  /data/wwwroot/jetty
+#     ln -sb /opt/jetty/config /data/config/jetty
 
 # Check version,
 # must use sudo sh -c to solve the no-root permission
