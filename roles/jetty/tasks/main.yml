@@ -1,36 +1,37 @@
-# install Jetty by OS_family
-- name: Install this role on {{ansible_os_family}}
-  include: "{{ansible_os_family}}.yml"
-
-# configure Jetty
-
+# configure jetty
 - name: Create jetty User
   user:
     name: jetty
     shell: /usr/sbin/nologin
-    home: /data/wwwroot/jetty
     create_home: no
 
-- name: Create jetty directory
+# download jetty and unarchive
+- name: download jetty and unarchive
+  unarchive:
+      src: "{{jetty_download_url}}"
+      dest: /opt
+      remote_src: yes 
+      group: jetty
+      owner: jetty
+
+- name: download jetty and unarchive
+  copy :
+      src: /opt/"{{jetty_direct}}"
+      dest: /opt/jetty
+      group: jetty
+      owner: jetty
+
+- name: Create jetty run directory
   file:
-    path: /data/wwwroot/jetty
+    path:  /opt/jetty/run
     state: directory
     owner: jetty
     group: jetty
-    
-- name: Download jetty
-  get_url:
-    dest: /data/wwwroot/jetty
-    url: "{{rabbitmq_download_url}}"
-    owner: jetty
-    group: jetty
 
-- name: Set jetty config
-  template:
-    src: jetty.conf.jinja2
-    dest: /data/wwwroot/jetty/jetty.conf
-    owner: jetty
-    group: jetty
+- name: set config file
+  copy :
+      src: jetty
+      dest: /etc/default/jetty
 
 - name: Setting jetty service
   copy:
@@ -43,37 +44,6 @@
     state: restarted
     enabled: yes
 
-- name: Create jetty System User
-  user:
-      name: jetty 
-      create_home: no 
-      home: /opt/jetty
-      shell: /usr/sbin/nologin
-
-- name: Download jetty
-  unarchive:
-      src: "{{rabbitmq_download_url}}"
-      dest: /opt/ 
-      group: jetty 
-      remote_src: yes
-      owner: jetty
-      mode: g+w
-
-- name: Create the storage directory for files.
-  file:
-      path: /opt/jetty/data
-      state: directory 
-      owner: jetty 
-      group: jetty
-      mode: g+w
-      
-- name: Set database connection /opt/jetty/config/config.json
-  lineinfile:
-    dest: /opt/jetty/config/config.json
-    regexp: '"DataSource":'
-    line: '    "DataSource": "{{rabbitmq_db_user}}:{{rabbitmq_db_password}}@tcp(localhost:3306)/{{rabbitmq_db_name}}?charset=utf8mb4,utf8&readTimeout=30s&writeTimeout=30s",'
-    backrefs: yes 
-
 # set soft link, -b cover the exist links
 # ln -sb src des
 - name: set soft link
@@ -85,14 +55,10 @@
 # must use sudo sh -c to solve the no-root permission
 - block:
   - name: Check Jetty Version
-    shell: sudo sh -c "rabbitmqctl status | grep 'Jetty version' 1>> /data/logs/install_version.txt"
-
-  - name: Check Erlang Version
-    shell: sudo sh -c 'echo "Erlang $(yum info erlang | grep Version | sed -n 1p)" 1>> /data/logs/install_version.txt'
-    when: ansible_os_family=="RedHat"
+    shell: sudo sh -c "head -n 1 /opt/jetty/VERSION.txt > /data/logs/install_version.txt"
 
 # check service state
 - name: Check Jetty Service
   shell: systemctl status jetty | grep Active*
-  register: check_rabbitmq_service
-  notify: check_rabbitmq_service
+  register: check_jetty_service
+  notify: check_jetty_service
