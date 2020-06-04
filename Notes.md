@@ -1,58 +1,48 @@
 # Jetty Notes
 
 组件名称：Jetty-Server  
-安装文档：https://www.jetty.com/download.html  
+安装文档：https://www.eclipse.org/jetty/download.html  
 配置文档：https://www.jetty.com/admin-guide.html  
 支持平台： Debian家族 | RHEL家族 | Windows | Kubernetes |Docker  
 
-责任人：helin
+责任人：xuwei
 
 ## 概要
-
-RabbitMQ是一款开源的MQ系统，它包含RabbitMQ-Server和RabbitMQ-Client，服务器上运行的是RabbitMQ-Server
+Jetty 是一个开源的servlet容器，它为基于Java的web容器，例如JSP和servlet提供运行环境。Jetty是使用Java语言编写的，
+它的API以一组JAR包的形式发布。开发人员可以将Jetty容器实例化成一个对象，可以迅速为一些独立运行（stand-alone）
+的Java应用提供网络和web连接。
 
 ## 环境要求
 
 * 程序语言：Java 
 * 应用服务器：自带
 * 数据库：无
-* 依赖组件：Erlang
+* 依赖组件：jdk
 * 其他：
+
+## 依赖说明
+依赖的jdk我们通过引入role_jdk来实现。
 
 ## 安装说明
 
-官方建议使用其自身提供的erlang和rabbitmq-server的仓库，不建议使用操作系统自带的仓库或其他第三方仓库。同时，官方提供了自动安装仓库的自动化脚本。
 
-下面基于不同的安装平台，分别进行安装说明。
-
-### CentOS
+### Linux
 
 ```shell
-# 分别安装erlang源和rabbitmq-server源
-curl -s https://packagecloud.io/install/repositories/jetty/erlang/script.rpm.sh | sudo bash
-curl -s https://packagecloud.io/install/repositories/jetty/jetty-server/script.rpm.sh | sudo bash
+# 下载稳定版jetty
+wget https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/9.4.29.v20200521/jetty-distribution-9.4.29.v20200521.tar.gz
 
-# 安装
-yum install erlang jetty-server -y
-```
+# 解压即安装
+tar zxvf jetty-distribution-9.4.29.v20200521.tar.gz -C /opt/
+mv /opt/jetty-distribution-9.4.29.v20200521/ /opt/jetty
 
-### Ubuntu
-
-```shell
-# 分别安装erlang源和rabbitmq-server源
-curl -s https://packagecloud.io/install/repositories/jetty/erlang/script.deb.sh | sudo bash
-curl -s https://packagecloud.io/install/repositories/jetty/jetty-server/script.deb.sh | sudo bash
-
-# 安装
-sudo apt-get update -y
-apt install erlang jetty-server -y
 ```
 
 ## 路径
 
-* 程序路径：/usr/lib/jetty/lib/rabbitmq_server-*
-* 日志路径：/var/log/jetty  
-* 配置文件路径：  
+* 程序路径：/opt/jetty
+* 日志路径：/opt/jetty/logs  
+* 配置文件路径： /etc/default/jetty
 * 其他...
 
 ## 配置
@@ -60,17 +50,23 @@ apt install erlang jetty-server -y
 安装完成后，需要依次完成如下配置
 
 ```shell
-# Set Jetty
-- name: Restart Jetty
-  shell: systemctl start jetty-server
+创建一个jetty用户：useradd -m jetty
+改变jetty文件夹的所属用户：chown -R jetty:jetty /opt/jetty/
+为jetty.sh创建一个软链接到 /etc/init.d directory 来创建一个启动脚本文件：ln -s /opt/jetty/bin/jetty.sh /etc/init.d/jetty
+开机启动服务：chkconfig --add jetty  
+chkconfig --level 345 jetty on
+设置运行环境：mkdir /opt/jetty/run/
+chown -R jetty:jetty /opt/jetty/run/
 
-- name: Enable the management console of Jetty
-  shell: jetty-plugins enable rabbitmq_management
-
-- name: Create administrator for Jetty console
-  shell: |
-    rabbitmqctl add_user admin admin
-    rabbitmqctl set_user_tags admin administrator
+修改端口和监听地址：
+vi /etc/default/jetty
+```
+JETTY_HOME=/opt/jetty
+JETTY_USER=jetty
+JETTY_PORT=8080
+JETTY_HOST=127.0.0.1
+JETTY_LOGS=/opt/jetty/logs/
+JETTY_RUN=/opt/jetty/run/
 ```
 
 ## 账号密码
