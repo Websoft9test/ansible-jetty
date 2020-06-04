@@ -2,12 +2,12 @@
 
 You use the **SSH** to connect your Server and run the command `cat /credentials/password.txt` to get the username and password of this deployment solution.
 
-These accounts are required for RabbitMQ image installation and configuration
+These accounts are required for Jetty image installation and configuration
 
-## RabbitMQ
+## Jetty
 
-* RabbitMQ administrator username: `admin`
-* RabbitMQ administrator password: stored in the file of your server */credentials/password.txt*
+* Jetty administrator username: `admin`
+* Jetty administrator password: stored in the file of your server */credentials/password.txt*
   > If there no password.txt exist, the administrator password is `admin`
 
 ## MySQL

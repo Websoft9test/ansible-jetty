@@ -3,8 +3,8 @@
 #### 如何以调试模式启动RabbitMQ服务？
 
 ```
-systemctl stop rabbitmq-server
-rabbitmq-server console
+systemctl stop jetty-server
+jetty-server console
 ```
 
 #### 是否可以通过命令行修改RabbitMQ后台密码？

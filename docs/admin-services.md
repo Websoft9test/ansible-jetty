@@ -1,29 +1,29 @@
 # Start or Stop the Services
 
-These commands you must know when you using the RabbitMQ of Websoft9
+These commands you must know when you using the Jetty of Websoft9
 
-## RabbitMQ
+## Jetty
 
 ```shell
-sudo systemctl start rabbitmq-server
-sudo systemctl stop rabbitmq-server
-sudo systemctl restart rabbitmq-server
-sudo systemctl status rabbitmq-server
+sudo systemctl start jetty-server
+sudo systemctl stop jetty-server
+sudo systemctl restart jetty-server
+sudo systemctl status jetty-server
 
-# you can use this debug mode if RabbitMQ service can't run
-rabbitmq-server console
+# you can use this debug mode if Jetty service can't run
+jetty-server console
 ```
 
-## RabbitMQ
+## Jetty
 
 ```shell
-sudo systemctl start rabbitmq-server
-sudo systemctl stop rabbitmq-server
-sudo systemctl restart rabbitmq-server
-sudo systemctl status rabbitmq-server
+sudo systemctl start jetty-server
+sudo systemctl stop jetty-server
+sudo systemctl restart jetty-server
+sudo systemctl status jetty-server
 
-# you can use this debug mode if RabbitMQ service can't run
-rabbitmq-server console
+# you can use this debug mode if Jetty service can't run
+jetty-server console
 ```
 
 ### MySQL

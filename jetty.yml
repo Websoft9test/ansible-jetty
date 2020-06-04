@@ -1,0 +1,36 @@
+  
+# 核心任务
+
+- name: Jetty
+  hosts: all
+  become: yes
+  become_method: sudo
+
+  vars_files:
+    - vars/main.yml
+  
+  vars_prompt:
+    - name: 'rabbitmq_selection'
+      prompt: "Choose the Jetty distribution \n
+      1: Jetty 5 Classic\n
+      2: Jetty Artemis\n"
+      private: no
+      default: 1
+
+  vars:
+    rabbitmq_select:
+      '1': "classic"
+      '2': "artemis"
+
+    rabbitmq_distribution: "{{rabbitmq_select[rabbitmq_selection]}}"
+  
+  pre_tasks:
+    - debug:
+        msg: Will install {{rabbitmq_distribution}}
+
+  roles:
+    - {role: role_common, tags: "role_common"}  
+    - {role: role_jdk, tags: "role_jdk"}  
+    - {role: jetty, tags: "jetty"}
+    - {role: role_preend, tags: "preend"}
+    - {role: role_end, tags: "role_end"}
