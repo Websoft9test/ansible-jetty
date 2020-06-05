@@ -4,7 +4,6 @@ After=
 [Service]
 Environment=RAILS_ENV=production
 Type=simple
-WorkingDirectory=/opt/jetty
-ExecStart=$JETTY_HOME/bin
+ExecStart=/opt/jetty/bin/jetty.sh start --ip=0.0.0.0 --allow-root
 [Install]
 WantedBy=multi-user.target
