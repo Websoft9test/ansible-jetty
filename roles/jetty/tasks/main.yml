@@ -1,9 +1,9 @@
 # configure jetty
-#- name: Create jetty User
-#  user:
-#    name: jetty
-#    shell: /usr/sbin/nologin
-#    create_home: yes
+- name: Create jetty User
+  user:
+    name: jetty
+    shell: /usr/sbin/nologin
+    create_home: yes
 
 # download jetty and unarchive
 - name: download jetty and unarchive
@@ -11,8 +11,8 @@
       src: "{{jetty_download_url}}"
       dest: /opt
       remote_src: yes 
-#      group: jetty
-#      owner: jetty
+      group: jetty
+      owner: jetty
 
 # excute again,delete the jetty directory
 - name: Remove jetty directory
@@ -27,13 +27,13 @@
   file:
     path:  /opt/jetty/run
     state: directory
-#    owner: jetty
-#    group: jetty
+    owner: jetty
+    group: jetty
 
 #- name: set config file
-#  copy :
-#      src: jetty
-#      dest: /etc/default/jetty
+  copy :
+      src: jetty.conf
+      dest: /etc/default/jetty.conf
 
 - name: Setting jetty service
   copy:

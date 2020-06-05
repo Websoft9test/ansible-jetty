@@ -5,6 +5,6 @@ After=
 Environment=RAILS_ENV=production
 Type=simple
 WorkingDirectory=/opt/jetty
-ExecStart=java -jar /opt/jetty/start.jar&
+ExecStart=$JETTY_HOME/bin
 [Install]
 WantedBy=multi-user.target
