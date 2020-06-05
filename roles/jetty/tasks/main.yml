@@ -3,7 +3,7 @@
   user:
     name: jetty
     shell: /usr/sbin/nologin
-    create_home: no
+    create_home: yes
 
 # download jetty and unarchive
 - name: download jetty and unarchive
@@ -21,7 +21,7 @@
     state: absent
 
 - name: copy files
-  shell : mv /opt/jetty*/  /opt/jetty
+  shell : gimv /opt/jetty*/  /opt/jetty
 
 - name: Create jetty run directory
   file:
