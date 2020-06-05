@@ -22,7 +22,7 @@
 
 - name: copy files
   shell :
-      mv /opt/jetty*  /opt/jetty
+      mv /opt/jetty*/  /opt/jetty
 
 - name: Create jetty run directory
   file:
