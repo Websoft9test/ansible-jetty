@@ -25,12 +25,12 @@
 
 - name: Create jetty run directory
   file:
-    path:  /opt/jetty/run
+    path: /opt/jetty/run
     state: directory
     owner: jetty
     group: jetty
 
-#- name: set config file
+- name: set config file
   copy :
       src: jetty.conf
       dest: /etc/default/jetty.conf
