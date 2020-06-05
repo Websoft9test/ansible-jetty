@@ -14,12 +14,15 @@
       group: jetty
       owner: jetty
 
-- name: download jetty and unarchive
-  copy :
-      src: /opt/"{{jetty_direct}}"
-      dest: /opt/jetty
-      group: jetty
-      owner: jetty
+# excute again,delete the jetty directory
+- name: Remove jetty directory
+  file:
+    path: /opt/jetty
+    state: absent
+
+- name: copy files
+  shell :
+      mv /opt/jetty*  /opt/jetty
 
 - name: Create jetty run directory
   file:
