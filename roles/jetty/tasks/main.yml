@@ -21,7 +21,7 @@
     state: absent
 
 - name: copy files
-  shell : gimv /opt/jetty*/  /opt/jetty
+  shell : mv /opt/jetty*/  /opt/jetty
 
 - name: Create jetty run directory
   file:
