@@ -40,10 +40,10 @@
     src: jetty.service
     dest: /lib/systemd/system/jetty.service
 
-- name: Restart jetty
+- name: start jetty
   service:
     name: jetty.service
-    state: restarted
+    state: started
     enabled: yes
 
 # set soft link, -b cover the exist links
