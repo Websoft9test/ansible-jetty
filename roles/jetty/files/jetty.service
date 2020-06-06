@@ -2,8 +2,10 @@
 Description=jetty
 After=
 [Service]
-Environment=RAILS_ENV=production
-Type=simple
+EnvironmentFile=/etc/default/jetty.conf
 ExecStart=/opt/jetty/bin/jetty.sh start --ip=0.0.0.0 --allow-root
+ExecReload=/bin/kill –HUP $MAINPID
+KillMode=process
+Restart=on-failure
 [Install]
 WantedBy=multi-user.target
