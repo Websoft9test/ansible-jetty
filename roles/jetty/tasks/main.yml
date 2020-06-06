@@ -2,7 +2,7 @@
 - name: Create jetty User
   user:
     name: jetty
-    shell: /usr/sbin/nologin
+    shell: /usr/bin/bash
     create_home: yes
 
 # download jetty and unarchive
