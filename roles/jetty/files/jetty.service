@@ -2,9 +2,10 @@
 Description=jetty
 After=
 [Service]
+Type=simple
+PIDFile=/opt/jetty/jetty/jetty.pid
 EnvironmentFile=/etc/default/jetty.conf
 ExecStart=/opt/jetty/bin/jetty.sh start --ip=0.0.0.0 --allow-jetty
-ExecReload=/bin/kill –HUP $MAINPID
 KillMode=process
 Restart=on-failure
 [Install]
