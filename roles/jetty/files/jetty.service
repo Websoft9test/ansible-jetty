@@ -3,7 +3,7 @@ Description=jetty
 After=
 [Service]
 EnvironmentFile=/etc/default/jetty.conf
-ExecStart=/opt/jetty/bin/jetty.sh start --ip=0.0.0.0 --allow-root
+ExecStart=/opt/jetty/bin/jetty.sh start --ip=0.0.0.0 --allow-jetty
 ExecReload=/bin/kill –HUP $MAINPID
 KillMode=process
 Restart=on-failure
