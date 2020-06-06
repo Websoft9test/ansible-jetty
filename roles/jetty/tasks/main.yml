@@ -40,6 +40,9 @@
     src: jetty.service
     dest: /lib/systemd/system/jetty.service
 
+- name: copy web files
+  shell : cp -r /opt/jetty/demo-base/webapps/* /opt/jetty/webapps
+
 - name: start jetty
   service:
     name: jetty.service
