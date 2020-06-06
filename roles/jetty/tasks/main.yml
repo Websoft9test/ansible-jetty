@@ -49,7 +49,6 @@
 - name: copy web files
   shell : cp -r /opt/jetty/demo-base/webapps/ROOT /opt/jetty/webapps
 
-
 - name: copy indexpage
   copy:
     src: index.html

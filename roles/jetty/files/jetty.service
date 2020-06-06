@@ -2,7 +2,7 @@
 Description=jetty
 [Service]
 Type=simple
-ExecStart=sudo /opt/jetty/bin/jetty.sh restart --ip=0.0.0.0 --allow-root
+ExecStart=/opt/jetty/bin/jetty.sh restart --ip=0.0.0.0 --allow-root
 RemainAfterExit=yes
 [Install]
 WantedBy=multi-user.target
