@@ -2,8 +2,6 @@
 Description=jetty
 [Service]
 Type=simple
-PIDFile=/opt/jetty/jetty/jetty.pid
-EnvironmentFile=/etc/default/jetty.conf
-ExecStart=/opt/jetty/bin/jetty.sh start --ip=0.0.0.0 --allow-jetty
+ExecStart=/opt/jetty/bin/jetty.sh restart --ip=0.0.0.0 --allow-root&
 [Install]
 WantedBy=multi-user.target

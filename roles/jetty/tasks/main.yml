@@ -43,7 +43,7 @@
 - name: start jetty
   service:
     name: jetty.service
-    state: started
+    state: restarted
     enabled: yes
 
 # set soft link, -b cover the exist links
