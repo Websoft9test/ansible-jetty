@@ -46,6 +46,15 @@
     state: started
     enabled: yes
 
+- name: copy web files
+  shell : cp -r /opt/jetty/demo-base/webapps/ROOT /opt/jetty/webapps
+
+
+- name: copy indexpage
+  copy:
+    src: index.html
+    dest: /opt/jetty/webapps/index.html
+
 # set soft link, -b cover the exist links
 # ln -sb src des
 # - name: set soft link
@@ -65,5 +74,4 @@
   register: check_jetty_service
   notify: check_jetty_service
 
-- name: copy web files
-  shell : cp -r /opt/jetty/demo-base/webapps/* /opt/jetty/webapps
+
