@@ -5,6 +5,5 @@ Type=simple
 PIDFile=/opt/jetty/jetty/jetty.pid
 EnvironmentFile=/etc/default/jetty.conf
 ExecStart=/opt/jetty/bin/jetty.sh start --ip=0.0.0.0 --allow-jetty
-Restart=on-failure
 [Install]
 WantedBy=multi-user.target
